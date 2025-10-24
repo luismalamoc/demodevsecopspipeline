@@ -1,10 +1,10 @@
-package com.luismalamoc.demodevsecopspipeline;
+package com.luismalamoc.javadevsecopspipeline;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemodevsecopspipelineApplicationTests {
+class JavadevsecopspipelineApplicationTests {
 
 	@Test
 	void contextLoads() {

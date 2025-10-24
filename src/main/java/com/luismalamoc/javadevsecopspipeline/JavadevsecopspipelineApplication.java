@@ -1,13 +1,13 @@
-package com.luismalamoc.demodevsecopspipeline;
+package com.luismalamoc.javadevsecopspipeline;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemodevsecopspipelineApplication {
+public class JavadevsecopspipelineApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemodevsecopspipelineApplication.class, args);
+		SpringApplication.run(JavadevsecopspipelineApplication.class, args);
 	}
 
 }
