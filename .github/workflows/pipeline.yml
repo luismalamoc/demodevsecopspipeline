@@ -95,12 +95,13 @@ jobs:
           path: reports/
           retention-days: 30
 
-      - name: Display Dependency-Check Report
-        if: always()
+      - name: Validate CRITICAL, HIGH, or MEDIUM vulnerabilities in Dependency-Check report
         run: |
-          echo "=== OWASP Dependency-Check Results ==="
-          if [ -f reports/dependency-check-report.json ]; then
-            echo "Report generated successfully. Check artifacts for details."
+          if jq '.dependencies[].vulnerabilities[]? | select(.severity=="CRITICAL" or .severity=="HIGH" or .severity=="MEDIUM")' reports/dependency-check-report.json | grep .; then
+            echo "CRITICAL, HIGH, or MEDIUM vulnerabilities found in Dependency-Check report!"
+            exit 1
+          else
+            echo "No CRITICAL, HIGH, or MEDIUM vulnerabilities found in Dependency-Check report."
           fi
 
   docker_image_scan_job:
