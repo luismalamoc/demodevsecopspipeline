@@ -53,9 +53,13 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Build dependencies for scan
+        run: ./gradlew build -x test
       - name: Run OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
         id: Depcheck
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME_21_X64 }}
         with:
           project: 'spring-boot-app'
           path: '.'
@@ -64,8 +68,6 @@ jobs:
           args: >
             --failOnCVSS 4
             --enableRetired
-            --scan build.gradle
-            --scan gradle.lockfile
       - name: Display Dependency-Check Report
         if: always()
         run: |
