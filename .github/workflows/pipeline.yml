@@ -78,6 +78,9 @@ jobs:
           wget "https://github.com/dependency-check/DependencyCheck/releases/download/v${LATEST_VERSION}/dependency-check-${LATEST_VERSION}-release.zip"
           unzip -q dependency-check-${LATEST_VERSION}-release.zip
 
+      - name: Create reports directory
+        run: mkdir -p reports
+
       - name: Run OWASP Dependency-Check
         run: |
           ./dependency-check/bin/dependency-check.sh \
