@@ -20,6 +20,14 @@ jobs:
         run: ./gradlew build -x test
       - name: Run tests
         run: ./gradlew test
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+           build/
+           .gradle/
+          retention-days: 1
 
   sast_scan_job:
     name: SAST Scan Job
@@ -53,8 +61,10 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Build dependencies for scan
-        run: ./gradlew build -x test
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
       - name: Run OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
         id: Depcheck
@@ -65,9 +75,15 @@ jobs:
           path: '.'
           format: 'ALL'
           out: 'reports'
-          args: >
+          args: >-
             --failOnCVSS 4
             --enableRetired
+      - name: Upload Dependency-Check Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-reports
+          path: reports/
       - name: Display Dependency-Check Report
         if: always()
         run: |
